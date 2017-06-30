@@ -15,12 +15,17 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class MainActivity extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
     RecyclerView recyclerView;
     RecyclerAdapter adapter;
+
+    // 리모트 관련 설정
+    final String DOMAIN = "http://192.168.10.253:8080";
+    final String SERVERPATH = "/Bbs/List";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
         adapter = new RecyclerAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        load();
+    }
+
+    private void load(){
+        run(DOMAIN+SERVERPATH);
     }
 
     private void run(String url) {
@@ -50,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 // 결과 값인 jsonString을 객체로 변환
-
+                Log.d("Result==========================",result);
                 // listView의 adapter에 세팅
 
                 // listView에 notify하기
@@ -60,12 +71,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getData(String url) throws IOException {
+        // 요청 정보를 담고 있는 객체
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
-        Response response = client.newCall(request).execute();
-        return response.body().string();
+        // 응답 정보를 담고 있는 객체
+        Response response = null;
+                  // 서버로 요청
+        response = client.newCall(request).execute();
+        ResponseBody resBody = response.body();  // body 실제 우리가 봐야하는 내용들(html)을
+        return resBody.toString();   // String으로 받겠다는 의미
     }
 
     // 화면 xml에 onClick은 위젯 속성이 android:onClick:"btnPost"  추가
