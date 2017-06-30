@@ -8,5 +8,5 @@ import java.util.List;
 
 public class Data {
 
-    List<Bbs> bbsList;
+    public List<Bbs> bbsList;
 }

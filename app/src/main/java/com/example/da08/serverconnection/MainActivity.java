@@ -10,6 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.example.da08.serverconnection.domain.Data;
+import com.google.gson.Gson;
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
@@ -61,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(String result) {
                 // 결과 값인 jsonString을 객체로 변환
-                Log.d("Result==========================",result);
+                Gson gson = new Gson();
+                Data data = gson.fromJson(result,Data.class);
                 // listView의 adapter에 세팅
+                adapter.setData(data.bbsList);
 
                 // listView에 notify하기
+                adapter.notifyDataSetChanged();
             }
 
         }.execute(url);
@@ -81,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                   // 서버로 요청
         response = client.newCall(request).execute();
         ResponseBody resBody = response.body();  // body 실제 우리가 봐야하는 내용들(html)을
-        return resBody.toString();   // String으로 받겠다는 의미
+        return resBody.string();   // String으로 받겠다는 의미
     }
 
     // 화면 xml에 onClick은 위젯 속성이 android:onClick:"btnPost"  추가
