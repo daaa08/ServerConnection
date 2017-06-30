@@ -5,9 +5,9 @@ package com.example.da08.serverconnection.domain;
  */
 
 public class Bbs {
-    int id;
-    String title;
-    String author;
-    String content;
-    String date;
+    public int id;
+    public String title;
+    public String author;
+    public String content;
+    public String date;
 }
