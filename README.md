@@ -114,3 +114,52 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 ![enter image description here](http://www.nextree.co.kr/content/images/2016/09/eykim-20140205-annotation-01.jpg)
+
+## OK HTTP
+- HttpUrlConnection(http 프로토콜로 통신을 하기위한 API)을 쓰기 쉽게 해 줌
+- Thread가 없으면 안돌아감
+
+> App: Gradle에 추가
+```java
+compile 'com.squareup.okhttp3:okhttp:3.8.1'
+```
+> to use
+```java
+OkHttpClient client = new OkHttpClient();
+
+// 요청 정보를 담고 있는 객체
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        // 응답 정보를 담고 있는 객체
+        Response response = null;
+                  // 서버로 요청
+        response = client.newCall(request).execute();
+        ResponseBody resBody = response.body();  // body 실제 우리가 봐야하는 내용들(html)을
+        return resBody.string();   // String으로 받겠다는 의미
+```
+
+
+## Retrofit
+- HttpUrlConnection(http 프로토콜로 통신을 하기위한 API)을 쓰기 쉽게 해 줌
+- RestAPI를 쓰기 쉽게 해 줌
+- 내장 Thread가 있음
+> App: Gradle에 추가
+```java
+compile 'com.squareup.retrofit2:retrofit:2.3.0'
+compile 'com.squareup.retrofit2:converter-gson' // gson으로 변환
+```
+> to use
+```java
+// retrofit정의
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://172.30.1.15:8080/")   // 도메인 주소 끝에 /꼭 써줘야 함!!!!!!!!!!!!!!!
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                // 실제 서비스 인터페이스 생성
+                BbsService service = retrofit.create(BbsService.class);
+                // 서비스 호출
+                Call<Result> call = service.createBbs(bbs);
+```
+
