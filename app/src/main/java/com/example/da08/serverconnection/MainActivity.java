@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter adapter;
 
     // 리모트 관련 설정
-    final String DOMAIN = "http://192.168.10.253:8080";
+    final String DOMAIN = "http://172.30.1.15:8080";
     final String SERVERPATH = "/Bbs/List";
 
     @Override
@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         load();
     }
 
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 // 결과 값인 jsonString을 객체로 변환
                 Gson gson = new Gson();
-                Data data = gson.fromJson(result,Data.class);
+                Data data = gson.fromJson(result, Data.class);
                 // listView의 adapter에 세팅
                 adapter.setData(data.bbsList);
 

@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -28,20 +28,19 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     // butterKnife
-//    compile 'com.jakewharton:butterknife:8.+'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-
+    //    compile 'com.jakewharton:butterknife:8.+'
+    //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     // annotation
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
-
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
     // ok Http _ network library
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     // gson
     compile 'com.google.code.gson:gson:2.8.+'
     // retofit
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
-
+    // json library
+    //compile 'com.squareup.retrofit2:converter-gson'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
 }
